@@ -1,0 +1,66 @@
+﻿@{
+    var error = TempData["Error"] as string;
+}
+@model BookListMVC.Models.User
+
+
+<h2 class="text-info"> Create a User</h2>
+<br />
+<div class=" border container" style="padding: 30px">
+    <form method="post">
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Username"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="FirstName"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="LastName"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Password"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class=" text-danger"></span>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <div class="row p-3">
+                <label class="col-5 alert-danger">@error</label>
+            </div>
+        }
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="submit" class="btn btn-primary form-control">Create</button>
+            </div>
+            <div class="col-3">
+                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
