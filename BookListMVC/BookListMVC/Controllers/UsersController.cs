@@ -87,11 +87,11 @@ namespace BookListMVC.Controllers
         }
 
         [HttpGet]
-        [Route("/Account/AccessDenied")]
         public IActionResult AccessDenied()
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

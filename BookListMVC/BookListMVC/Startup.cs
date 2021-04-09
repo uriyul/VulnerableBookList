@@ -36,6 +36,7 @@ namespace BookListMVC
                 {
                     config.Cookie.Name = "BookListMVC.Cookie";
                     config.LoginPath = "/Users/Login";
+                    config.AccessDeniedPath = "/Users/AccessDenied";
                 });
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
