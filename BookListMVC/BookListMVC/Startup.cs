@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BookListMVC.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookListMVC
@@ -25,13 +26,28 @@ namespace BookListMVC
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie( config =>
-                {
-                    config.Cookie.Name = "BookListMVC.Cookie";
-                    config.LoginPath = "/Users/Login";
-                    config.AccessDeniedPath = "/Users/AccessDenied";
-                });
+            if (Configuration["AuthenticationType"].Equals("CookieAuth"))
+            {
+                //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                services.AddAuthentication(options =>
+                    {
+                        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+                    })
+                    .AddCookie(config =>
+                    {
+                        config.Cookie.Name = "BookListMVC.Cookie";
+                        config.LoginPath = "/Users/Login";
+                        config.AccessDeniedPath = "/Users/AccessDenied";
+                    }).AddGoogle(options =>
+                    {
+                        options.ClientId = "659581899933-64fsfoa2kfb6ph5v8pvbo69u2gmn1arf.apps.googleusercontent.com";
+                        options.ClientSecret = "q7nhQh5xq3HKhfMb3k6aJBKR";
+                        options.CallbackPath = "/Users/auth";
+                        options.AuthorizationEndpoint += "?prompt=consent";
+                    });
+            }
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 

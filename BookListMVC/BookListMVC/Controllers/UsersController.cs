@@ -20,10 +20,14 @@ namespace BookListMVC.Controllers
             _db = db;
         }
 
-
         public IActionResult Index()
         {
             return View();
+        }
+        
+        public IActionResult Auth()
+        {
+            return View("Index");
         }
 
         public IActionResult Login(string returnUrl)
@@ -95,7 +99,7 @@ namespace BookListMVC.Controllers
             return data;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -123,7 +127,7 @@ namespace BookListMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Update(int id)
         {
             var dbUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == id);
